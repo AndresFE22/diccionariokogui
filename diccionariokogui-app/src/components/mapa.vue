@@ -1,13 +1,39 @@
 <template>
-    <div>
-      <h1>Vista del mapa</h1>
-      <!-- Agrega el contenido de la vista 1 (o 2) aquí -->
+  <div class="margin">
+    <h1>Mapa de acceso a Taiku</h1>
+    <div class="map-container">
+      <img src="../assets/mapa.png" alt="Mapa" class="map-image">
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'VistaMapa',
-  };
-  </script>
-  
+  </div>
+</template>
+
+<style>
+
+.margin {
+  margin-top: 4%;
+}
+
+.map-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10%;
+}
+
+.map-image {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+@media (max-width: 600px) {
+  .margin {
+  margin-top: 14%;
+}
+}
+</style>
+
+<script>
+export default {
+  name: 'VistaMapa',
+};
+</script>

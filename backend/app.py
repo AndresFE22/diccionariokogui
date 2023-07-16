@@ -23,30 +23,10 @@ else:
 def inicio():
     return ''
 
-# Ruta de ejemplo para obtener datos
-@app.route('/api/palabras', methods=['GET'])
-def obtenerPalabras():
-    cursor = db.cursor()
-    query = "SELECT palabra, significado, imagen FROM palabras"
-    cursor.execute(query)
-    palabras = cursor.fetchall()
-    cursor.close()
-    resultado = []
-    for palabra, significado, imagen in palabras: 
-        imagen_base64 = base64.b64encode(imagen).decode('utf-8')
-        formato_imagen = imghdr.what(None, imagen)
-        resultado.append({ 'palabra': palabra, 'significado': significado, 'imagen': imagen_base64, 'formato': formato_imagen})
-    
 
-    print(resultado)
-    response = jsonify(resultado)
-    print(response)
-    response.headers.add('Access-Control-Allow-Origin', '*')  # Agregar el encabezado
-    return response
-
-# Ruta de ejemplo para crear datos
-@app.route('/api/datos', methods=['POST'])
-def crear_dato():
+# Rutas para guardar informacion
+@app.route('/api/guardarpalabras', methods=['POST'])
+def crear_palabra():
     palabra = request.form.get('palabra')
     significado = request.form.get('significado')
     imagen = request.files['imagen']
@@ -64,6 +44,107 @@ def crear_dato():
         
     # Aquí puedes realizar la lógica para guardar el nuevo dato en una base de datos, por ejemplo
     return jsonify({'message': 'Dato creado exitosamente'})
+
+@app.route('/api/guardarinfo', methods=['POST'])
+def crear_info():
+    informacion = request.form.get('informacion')
+    significado = request.form.get('significado')
+    imagen = request.files['imagen']
+    imagendata = imagen.read()
+
+    print(informacion, significado, imagen)
+    db.reconnect()
+    cursor = db.cursor()
+    query = "INSERT INTO informacion (informacion, significado, imagen) VALUES (%s, %s, %s)"
+    values = (informacion, significado, imagendata)
+    cursor.execute(query, values)
+    db.commit()
+    cursor.close()
+
+        
+    # Aquí puedes realizar la lógica para guardar el nuevo dato en una base de datos, por ejemplo
+    return jsonify({'message': 'Dato creado exitosamente'})
+
+@app.route('/api/guardaroracion', methods=['POST'])
+def crear_oracion():
+    oracion = request.form.get('oracion')
+    significado = request.form.get('significado')
+    imagen = request.files['imagen']
+    imagendata = imagen.read()
+
+    print(oracion, significado, imagen)
+
+    db.reconnect()
+    cursor = db.cursor()
+    query = "INSERT INTO oraciones (oracion, significado, imagen) VALUES (%s, %s, %s)"
+    values = (oracion, significado, imagendata)
+    cursor.execute(query, values)
+    db.commit()
+    cursor.close()
+
+        
+    # Aquí puedes realizar la lógica para guardar el nuevo dato en una base de datos, por ejemplo
+    return jsonify({'message': 'Dato creado exitosamente'})
+
+
+
+# Ruta para enviar la informacion
+@app.route('/api/palabras', methods=['GET'])
+def obtenerPalabras():
+    db.reconnect()
+    cursor = db.cursor()
+    query = "SELECT palabra, significado, imagen FROM palabras"
+    cursor.execute(query)
+    palabras = cursor.fetchall()
+    cursor.close()
+    resultado = []
+    for palabra, significado, imagen in palabras: 
+        imagen_base64 = base64.b64encode(imagen).decode('utf-8')
+        formato_imagen = imghdr.what(None, imagen)
+        resultado.append({ 'palabra': palabra, 'significado': significado, 'imagen': imagen_base64, 'formato': formato_imagen})
+    print(resultado)
+    response = jsonify(resultado)
+    print(response)
+    response.headers.add('Access-Control-Allow-Origin', '*')  # Agregar el encabezado
+    return response
+
+@app.route('/api/oraciones', methods=['GET'])
+def obtenerOraciones():
+    db.reconnect()
+    cursor = db.cursor()
+    query = "SELECT oracion, significado, imagen FROM oraciones"
+    cursor.execute(query)
+    oraciones = cursor.fetchall()
+    cursor.close()
+    resultado = []
+    for oracion, significado, imagen in oraciones: 
+        imagen_base64 = base64.b64encode(imagen).decode('utf-8')
+        formato_imagen = imghdr.what(None, imagen)
+        resultado.append({ 'oracion': oracion, 'significado': significado, 'imagen': imagen_base64, 'formato': formato_imagen})
+    print(resultado)
+    response = jsonify(resultado)
+    print(response)
+    response.headers.add('Access-Control-Allow-Origin', '*')  # Agregar el encabezado
+    return response
+
+@app.route('/api/info', methods=['GET'])
+def obtenerInformacion():
+    db.reconnect()
+    cursor = db.cursor()
+    query = "SELECT informacion, significado, imagen FROM informacion"
+    cursor.execute(query)
+    informacion = cursor.fetchall()
+    cursor.close()
+    resultado = []
+    for info, significado, imagen in informacion: 
+        imagen_base64 = base64.b64encode(imagen).decode('utf-8')
+        formato_imagen = imghdr.what(None, imagen)
+        resultado.append({ 'info': info, 'significado': significado, 'imagen': imagen_base64, 'formato': formato_imagen})
+    print(resultado)
+    response = jsonify(resultado)
+    print(response)
+    response.headers.add('Access-Control-Allow-Origin', '*')  # Agregar el encabezado
+    return response
 
 if __name__ == '__main__':
     app.run(port=8080)

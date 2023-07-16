@@ -2,20 +2,24 @@
   <div class="container">
     <h1>Palabras</h1>
     <div class="search-container">
-  <input v-model="busqueda" type="text" placeholder="Buscar palabra" @input="realizarBusqueda">
-</div>
+      <input v-model="busqueda" type="text" placeholder="Buscar palabra" @input="realizarBusqueda">
+    </div>
     <div class="word-container">
       <ul class="word-list">
         <li v-for="palabra in palabras" :key="palabra.palabra" class="word-item">
           <div class="word-box">
             <p class="word-text">{{ palabra.palabra }}</p>
             <div class="ver-mas-container">
-              <button @click="verMas(palabra)" class="ver-mas-btn">{{ mostrarSignificado === palabra.significado ? 'Ver menos' : 'Ver más' }}</button>
+              <transition name="fade">
+                <button @click="verMas(palabra)" class="ver-mas-btn">{{ mostrarSignificado === palabra.significado ? 'Ver menos' : 'Ver más' }}</button>
+              </transition>
             </div>
-            <div v-if="mostrarSignificado === palabra.significado" class="significado">
-              <p class="significado-text">Significado: {{ palabra.significado }}</p>
-              <img v-if="palabra.imagen" :src="getImageUrl(palabra.imagen, palabra.formato)" :alt="palabra.palabra" class="imagen">
-            </div>
+            <transition name="fade">
+              <div v-if="mostrarSignificado === palabra.significado" class="significado">
+                <p class="significado-text">Significado: {{ palabra.significado }}</p>
+                <img v-if="palabra.imagen" :src="getImageUrl(palabra.imagen, palabra.formato)" :alt="palabra.palabra" class="imagen">
+              </div>
+            </transition>
           </div>
         </li>
       </ul>
@@ -27,9 +31,9 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   height: 100vh;
+  margin-top: 4%;
 }
 
 .word-container {
@@ -53,7 +57,7 @@
   background-color: #f0f0f0;
   padding: 10px;
   position: relative;
-  border: 1px solid rgba(0, 162, 255, 0.562);
+  border: 1px solid rgb(151, 98, 0);
   border-radius: 20px;
 }
 
@@ -69,7 +73,7 @@
 }
 
 .ver-mas-btn {
-  background-color: rgb(0, 162, 255);
+  background-color: rgb(151, 98, 0);
   color: rgb(255, 255, 255);
   font-weight: bold;
   padding: 5px 10px;
@@ -94,10 +98,20 @@
 
 /* Estilos para dispositivos móviles */
 @media (max-width: 600px) {
+  .word-container {
+    width: 100%;
+    padding: 10px;
+  }
+  
   .ver-mas-btn {
     padding: 3px 8px;
     font-size: 12px;
   }
+
+  .container {
+  margin-top: 12%;
+}
+
 }
 
 .significado {
@@ -106,6 +120,16 @@
 
 .significado-text {
   font-style: italic;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
 
@@ -137,26 +161,25 @@ export default {
         });
     },
     verMas(palabra) {
-  if (this.mostrarSignificado === palabra.significado) {
-    this.mostrarSignificado = '';
-  } else {
-    this.mostrarSignificado = palabra.significado;
-  }
-},
+      if (this.mostrarSignificado === palabra.significado) {
+        this.mostrarSignificado = '';
+      } else {
+        this.mostrarSignificado = palabra.significado;
+      }
+    },
     getImageUrl(imagenBase64, formato) {
       return `data:image/${formato};base64,${imagenBase64}`;
     },
     realizarBusqueda() {
       if (this.busqueda) {
-      this.palabras = this.palabras.filter(palabra => palabra.palabra.toLowerCase().includes(this.busqueda.toLowerCase()));
-    } else {
-      this.palabras = [...this.palabrasOriginal];
-  } 
-}, 
+        this.palabras = this.palabras.filter(palabra => palabra.palabra.toLowerCase().includes(this.busqueda.toLowerCase()));
+      } else {
+        this.palabras = [...this.palabrasOriginal];
+      } 
+    },
     resetearBusqueda() {
-      this.busqueda= '',
-      this.realizarBusqueda()
-
+      this.busqueda = '';
+      this.realizarBusqueda();
     },
   }
 };

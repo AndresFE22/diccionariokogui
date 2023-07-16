@@ -2,13 +2,14 @@
   <div>
     <nav class="campo-nav">
       <ul>
-        <li><router-link to="/">Inicio</router-link></li>
-        <li><router-link to="/Campos/ingresar-palabra">Palabras</router-link></li>
-        <li><router-link to="/oraciones">Oraciones</router-link></li>
-        <li><router-link to="/informacion">Información</router-link></li>
+        <li><router-link to="/" exact exact-active-class="active-link">Inicio</router-link></li>
+        <li><router-link to="/Campos/ingresar-palabra" exact exact-active-class="active-link">Palabras</router-link></li>
+        <li><router-link to="/Campos/ingresar-oracion" exact exact-active-class="active-link">Oraciones</router-link></li>
+        <li><router-link to="/Campos/ingresar-info" exact exact-active-class="active-link">Información</router-link></li>
       </ul>
     </nav>
-    <router-view></router-view></div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <style scoped>
@@ -37,7 +38,12 @@
 .campo-nav a:hover {
   background-color: #ccc;
 }
+
+.active-link {
+  background-color: #ccc; /* Cambia el color de fondo para el enlace activo */
+}
 </style>
+
 
 <script>
    export default {
