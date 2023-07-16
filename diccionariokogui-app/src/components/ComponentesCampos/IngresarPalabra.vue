@@ -6,6 +6,8 @@
           <v-text-field v-model="significado" label="Digite su significado" class="text"></v-text-field>
           <v-file-input v-model="imagen" label="Agregue una imagen" accept="image/*"></v-file-input>
           <v-btn @click="GuardarDatos">Guardar palabra</v-btn>
+          <v-btn>Editar palabras</v-btn>
+          
         </div>
     </div>
   </template>

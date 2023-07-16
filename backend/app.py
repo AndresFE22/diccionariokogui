@@ -1,11 +1,21 @@
-from flask import Flask, jsonify, request, session, render_template
+from flask import Flask, jsonify, request, session, render_template, Response
 from flask_cors import CORS
 import mysql.connector
 import base64
 import imghdr
+import json
+
 app = Flask(__name__)
 CORS(app)
 app.secret_key = 'mi_clave_secreta'
+
+class CustomJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, bytes):
+            return obj.decode('utf-8')
+        return super().default(obj)
+
+app.json_encoder = CustomJSONEncoder
 
 db = mysql.connector.connect(
     host="localhost",
@@ -146,5 +156,71 @@ def obtenerInformacion():
     response.headers.add('Access-Control-Allow-Origin', '*')  # Agregar el encabezado
     return response
 
+
+#Rutas para editar la informacion
+
+#imprimirpalabras
+@app.route('/api/showtable', methods=['GET'])
+def showpalabras():
+    db.reconnect()
+    cursor = db.cursor()
+    query = "SELECT id, palabra, significado FROM palabras"
+    cursor.execute(query)
+    palabras = cursor.fetchall()
+    cursor.close()
+    print(palabras)
+    json_data = json.dumps(palabras, cls=CustomJSONEncoder)
+    response = Response(json_data, mimetype='application/json')
+    response.headers.add('Access-Control-Allow-Origin', '*')  # Agregar el encabezado
+    print(response)
+    return response
+
 if __name__ == '__main__':
     app.run(port=8080)
+
+#eliminar palabras
+@app.route('/api/palabras/<int:id>', methods=['DELETE'])
+def eliminar_palabra(id):
+    db.reconnect()
+    cursor = db.cursor()
+    query = "DELETE FROM palabras WHERE id = %s"
+    cursor.execute(query, (id,))
+    db.commit()
+    cursor.close()
+    
+    return jsonify({'message': 'Palabra eliminada correctamente'})
+
+#editar palabras
+@app.route('/api/palabras/<int:id>', methods=['PUT'])
+def editar_palabra(id):
+
+    nueva_palabra = request.json.get('palabra')
+    nuevo_significado = request.json.get('significado')
+    print(nueva_palabra, nuevo_significado)
+
+    db.reconnect()
+    cursor = db.cursor()
+    query = "UPDATE palabras SET palabra = %s, significado = %s WHERE id = %s"
+    cursor.execute(query, (nueva_palabra, nuevo_significado, id,))
+    db.commit()
+    cursor.close()
+    
+    return jsonify({'message': 'Palabra eliminada correctamente'})
+
+#mandar imagen de palabras
+@app.route('/api/palabras/<int:id>/image', methods=['GET'])
+def imagen_palabras(id):
+    db.reconnect()
+    cursor = db.cursor()
+    query = "SELECT imagen FROM palabras WHERE id = %s"
+    cursor.execute(query, (id,))
+    imagen = cursor.fetchone()[0]
+    cursor.close()
+    imagen_base64 = base64.b64encode(imagen).decode('utf-8')
+    formato_imagen = imghdr.what(None, imagen)
+    response = jsonify({
+        'imagen_base64': imagen_base64,
+        'formato_imagen': formato_imagen
+    })
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response

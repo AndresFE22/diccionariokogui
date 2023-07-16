@@ -1,16 +1,18 @@
 <template>
   <div id="app">
     <v-app>
-      <v-app-bar app color="secondary" dark v-if="!$route.meta.hideNav">
-        <v-toolbar-title>Diccionario Kogui</v-toolbar-title>
+      <v-app-bar app v-if="!$route.meta.hideNav">
+        <img src="./assets/UNICOR.png" alt="" class="imgunicor">
         <v-spacer></v-spacer>
+        <v-toolbar-title style="font-weight: bold;">DICCIONARIO KOGUI</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <img src="./assets/gicafs.jpeg" alt="" class="imggicafs">
         <v-btn icon to="/configuracion">
           <v-icon>mdi-account</v-icon>
         </v-btn>
       </v-app-bar>
       <v-main class="text-center">
         <nav v-if="!$route.meta.hideNav" class="nav-container">
-      
           <div :class="{'active': isActive('/palabras')}">
             <router-link
               to="/palabras"
@@ -50,7 +52,6 @@
         </nav>
         <transition name="slide" mode="out-in">
           <router-view>
-            <img src="./assets/fondo.jpg" alt="">
           </router-view>
         </transition>
       </v-main>
@@ -69,6 +70,16 @@
   opacity: 0;
   transform: translateX(-50px);
 }
+
+.imgunicor {
+  width: 2%;
+}
+
+
+.imggicafs {
+  width: 6%;
+}
+
 
 nav {
   display: flex;
@@ -125,6 +136,13 @@ nav div {
 @media (max-width: 600px) {
   .nav-link {
     flex-basis: 50%; 
+  }
+  .imgunicor {
+    width: 7%;
+  }
+
+  .imggicafs {
+    width: 14%;
   }
 }
 </style>

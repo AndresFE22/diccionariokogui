@@ -14,6 +14,8 @@ import campos from './components/Campos.vue'
 import IngresarPalabra from './components/ComponentesCampos/IngresarPalabra'
 import IngresarOracion from './components/ComponentesCampos/IngresarOracion'
 import IngresarInformacion from './components/ComponentesCampos/IngresarInformacion'
+import EditarPalabra from './components/ComponentesCampos/editarComponentes/EditarPalabra'
+import CambiarPalabra from './components/ComponentesCampos/editarComponentes/editarpalabra/CambiarPalabra'
 import ejemplo from './components/ejemplo.vue'
 import '@mdi/font/css/materialdesignicons.css';
 
@@ -47,7 +49,24 @@ const router = new VueRouter({
         path: 'ingresar-info',
         component: IngresarInformacion,
         meta: { hideNav: true }
-      }
+      },
+
+      {
+        path: 'editar-palabra',
+        component: EditarPalabra,
+        meta: { hideNav: true }
+      },
+
+      {
+        path: 'editar-palabra/editar/:id',
+        component: CambiarPalabra,
+        meta: { hideNav: true }
+      },
+
+
+      
+
+
 
     ]
   },
