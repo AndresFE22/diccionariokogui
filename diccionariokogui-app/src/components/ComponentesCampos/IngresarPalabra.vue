@@ -59,7 +59,7 @@
             console.log(response.data);
             this.palabra = '';
             this.significado = '';
-            this.image = null;
+            this.imagen = null;
         })
         .catch(error => {
             console.error(error)
