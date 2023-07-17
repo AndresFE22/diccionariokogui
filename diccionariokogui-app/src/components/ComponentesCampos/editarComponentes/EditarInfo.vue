@@ -4,10 +4,10 @@
             <v-btn icon @click="atras">
             <v-icon>mdi-arrow-left</v-icon>
             </v-btn>
-            <h1>Tabla de Palabras</h1>
+            <h1>Tabla de Información</h1>
         </div>
       <div class="container">
-        <v-data-table :headers="headers" :items="palabras" item-key="id" class="tabla-palabras">
+        <v-data-table :headers="headers" :items="informacion" item-key="id" class="tabla-palabras">
           <template slot="item" slot-scope="{ item }">
             <tr>
               <td class="text-left">{{ item[0] }}</td>
@@ -21,12 +21,12 @@
                 <v-icon @click="openModal(item[0])">mdi-image</v-icon>
               </td>
               <td class="text-left">
-                <v-btn class="editar-button" @click="editarPalabra(item[0])">
+                <v-btn class="editar-button" @click="EditarInfo(item[0])">
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
               </td>
               <td class="text-left">
-                <v-btn class="eliminar-button" @click="eliminarPalabra(item[0])">
+                <v-btn class="eliminar-button" @click="eliminarInfo(item[0])">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </td>
@@ -60,10 +60,10 @@
   export default {
     data() {
       return {
-        palabras: [],
+        informacion: [],
         headers: [
           { text: 'ID', value: 'id' },
-          { text: 'Palabra', value: 'palabra' },
+          { text: 'Informacion', value: 'informacion' },
           { text: 'Significado', value: 'significado' },
           { text: 'Imagen', value: 'significado' },
           { text: 'Editar', value: 'edit' },
@@ -76,31 +76,28 @@
       };
     },
     mounted() {
-      this.obtenerPalabras();
+      this.obtenerinformacion();
     },
     methods: {
-      obtenerPalabras() {
+      obtenerinformacion() {
         axios
-          .get('http://localhost:5000/api/showtable')
+          .get('http://localhost:5000/api/showtablei')
           .then((response) => {
-            this.palabras = response.data;
+            this.informacion = response.data;
           })
           .catch((error) => {
             console.error(error);
           });
       },
-      editarPalabra(id) {
-        // Redirige a la vista de edición de palabras con el ID de la palabra
-        this.$router.push(`editar-palabra/editar/${id}`);
+      EditarInfo(id) {
+        this.$router.push(`editar-info/editar/${id}`);
       },
-      eliminarPalabra(id) {
-        // Realiza una solicitud al servidor para eliminar la palabra por su ID
+      eliminarInfo(id) {
         axios
-          .delete(`http://localhost:5000/api/palabras/${id}`)
+          .delete(`http://localhost:5000/api/info/${id}`)
           .then((response) => {
             console.log(response.data);
-            // Actualiza la lista de palabras después de eliminar
-            this.obtenerPalabras();
+            this.obtenerinformacion();
           })
           .catch((error) => {
             console.error(error);
@@ -108,7 +105,7 @@
       },
       openModal(id) {
         axios
-          .get(`http://localhost:5000/api/palabras/${id}/image`)
+          .get(`http://localhost:5000/api/info/${id}/image`)
           .then((response) => {
             this.selectedImage = this.getImageUrl(
               response.data.imagen_base64,
@@ -129,7 +126,7 @@
       },
 
       atras() {
-        this.$router.push("/Campos/ingresar-palabra");
+        this.$router.push("/Campos/ingresar-info");
       }
     }
   };

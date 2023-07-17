@@ -2,10 +2,13 @@
     <div class="campos">
       <h1>Ingresar oraciones</h1>
         <div class="form-container">
-          <v-text-field v-model="oracion" label="Digite su oracion" class="text"></v-text-field>
-          <v-text-field v-model="significado" label="Digite su significado" class="text"></v-text-field>
-          <v-file-input v-model="imagen" label="Agregue una imagen" accept="image/*"></v-file-input>
-          <v-btn @click="GuardarDatos">Guardar oracion</v-btn>
+          <v-text-field v-model="oracion" :rules="[[v => !!v || 'Este campo es requerido']]" :error-messages="getErrorMessages(oracion)" label="Digite su oracion" class="text"></v-text-field>
+          <v-text-field v-model="significado" :rules="[[v => !!v || 'Este campo es requerido']]" :error-messages="getErrorMessages(significado)" label="Digite su significado" class="text"></v-text-field>
+          <v-file-input v-model="imagen" :rules="[[v => !!v || 'Este campo es requerido']]" :error-messages="getErrorMessages(imagen)" label="Agregue una imagen" accept="image/*"></v-file-input>
+          <div class="buttons">
+            <v-btn color="green" dark @click="GuardarDatos" class="b1">Guardar Oracion</v-btn>          
+          <v-btn color="primary" @click="EditarOraciones" class="b2" >Editar palabras</v-btn>
+          </div>
         </div>
     </div>
   </template>
@@ -23,6 +26,21 @@
   }
   .form-container .text {
       width: 50%;
+  }
+
+  
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .buttons .b1 {
+    margin-right: 3%;
+  }
+
+  .buttons .b2 {
+    margin-left: 3%;
   }
   
   
@@ -64,6 +82,14 @@
         .catch(error => {
             console.error(error)
         })
+    },
+
+    EditarOraciones() {
+      this.$router.push('/Campos/editar-oracion')
+    },
+
+    getErrorMessages(value) {
+      return !value ? ['Este campo es requerido'] : [];
     }
   }
   };

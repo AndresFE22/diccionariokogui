@@ -224,3 +224,135 @@ def imagen_palabras(id):
     })
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
+#imprimiroraciones
+@app.route('/api/showtableo', methods=['GET'])
+def showoraciones():
+    db.reconnect()
+    cursor = db.cursor()
+    query = "SELECT id, oracion, significado FROM oraciones"
+    cursor.execute(query)
+    oraciones = cursor.fetchall()
+    cursor.close()
+    print(oraciones)
+    json_data = json.dumps(oraciones, cls=CustomJSONEncoder)
+    response = Response(json_data, mimetype='application/json')
+    response.headers.add('Access-Control-Allow-Origin', '*')  # Agregar el encabezado
+    print(response)
+    return response
+
+if __name__ == '__main__':
+    app.run(port=8080)
+
+#eliminar oraciones
+@app.route('/api/oraciones/<int:id>', methods=['DELETE'])
+def eliminar_oracion(id):
+    db.reconnect()
+    cursor = db.cursor()
+    query = "DELETE FROM oraciones WHERE id = %s"
+    cursor.execute(query, (id,))
+    db.commit()
+    cursor.close()
+    
+    return jsonify({'message': 'Palabra eliminada correctamente'})
+
+#editar oraciones
+@app.route('/api/oraciones/<int:id>', methods=['PUT'])
+def editar_oracion(id):
+
+    nueva_oracion = request.json.get('oracion')
+    nuevo_significado = request.json.get('significado')
+    print(nueva_oracion, nuevo_significado)
+
+    db.reconnect()
+    cursor = db.cursor()
+    query = "UPDATE oraciones SET oracion = %s, significado = %s WHERE id = %s"
+    cursor.execute(query, (nueva_oracion, nuevo_significado, id,))
+    db.commit()
+    cursor.close()
+    
+    return jsonify({'message': 'Palabra editada correctamente'})
+
+#mandar imagen de oraciones
+@app.route('/api/oraciones/<int:id>/image', methods=['GET'])
+def imagen_oracion(id):
+    db.reconnect()
+    cursor = db.cursor()
+    query = "SELECT imagen FROM oraciones WHERE id = %s"
+    cursor.execute(query, (id,))
+    imagen = cursor.fetchone()[0]
+    cursor.close()
+    imagen_base64 = base64.b64encode(imagen).decode('utf-8')
+    formato_imagen = imghdr.what(None, imagen)
+    response = jsonify({
+        'imagen_base64': imagen_base64,
+        'formato_imagen': formato_imagen
+    })
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+#imprimir informacion
+@app.route('/api/showtablei', methods=['GET'])
+def showoinfo():
+    db.reconnect()
+    cursor = db.cursor()
+    query = "SELECT id, informacion, significado FROM informacion"
+    cursor.execute(query)
+    informacion = cursor.fetchall()
+    cursor.close()
+    print(informacion)
+    json_data = json.dumps(informacion, cls=CustomJSONEncoder)
+    response = Response(json_data, mimetype='application/json')
+    response.headers.add('Access-Control-Allow-Origin', '*')  # Agregar el encabezado
+    print(response)
+    return response
+
+if __name__ == '__main__':
+    app.run(port=8080)
+
+#eliminar informacion
+@app.route('/api/info/<int:id>', methods=['DELETE'])
+def eliminar_informacion(id):
+    db.reconnect()
+    cursor = db.cursor()
+    query = "DELETE FROM informacion WHERE id = %s"
+    cursor.execute(query, (id,))
+    db.commit()
+    cursor.close()
+    
+    return jsonify({'message': 'informacion eliminada correctamente'})
+
+#editar oraciones
+@app.route('/api/info/<int:id>', methods=['PUT'])
+def editar_informacion(id):
+
+    nueva_info = request.json.get('informacion')
+    nuevo_significado = request.json.get('significado')
+    print(nueva_info, nuevo_significado)
+
+    db.reconnect()
+    cursor = db.cursor()
+    query = "UPDATE informacion SET informacion = %s, significado = %s WHERE id = %s"
+    cursor.execute(query, (nueva_info, nuevo_significado, id,))
+    db.commit()
+    cursor.close()
+    
+    return jsonify({'message': 'info editada correctamente'})
+
+#mandar imagen de oraciones
+@app.route('/api/info/<int:id>/image', methods=['GET'])
+def imagen_informacion(id):
+    db.reconnect()
+    cursor = db.cursor()
+    query = "SELECT imagen FROM informacion WHERE id = %s"
+    cursor.execute(query, (id,))
+    imagen = cursor.fetchone()[0]
+    cursor.close()
+    imagen_base64 = base64.b64encode(imagen).decode('utf-8')
+    formato_imagen = imghdr.what(None, imagen)
+    response = jsonify({
+        'imagen_base64': imagen_base64,
+        'formato_imagen': formato_imagen
+    })
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response

@@ -58,7 +58,8 @@ export default {
       axios.put(`http://localhost:5000/api/palabras/${id}`, datos)
         .then(response => {
           console.log(response.data);
-          // Realiza alguna acción adicional después de editar la palabra, como redirigir a otra vista o actualizar la lista de palabras
+          this.nuevaPalabra = '';
+          this.nuevoSignificado = '';
         })
         .catch(error => {
           console.error(error);

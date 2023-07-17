@@ -16,6 +16,10 @@ import IngresarOracion from './components/ComponentesCampos/IngresarOracion'
 import IngresarInformacion from './components/ComponentesCampos/IngresarInformacion'
 import EditarPalabra from './components/ComponentesCampos/editarComponentes/EditarPalabra'
 import CambiarPalabra from './components/ComponentesCampos/editarComponentes/editarpalabra/CambiarPalabra'
+import EditarOracion from './components/ComponentesCampos/editarComponentes/EditarOracion'
+import CambiarOracion from './components/ComponentesCampos/editarComponentes/editaroracion/CambiarOracion'
+import EditarInfo from './components/ComponentesCampos/editarComponentes/EditarInfo'
+import CambiarInfo from './components/ComponentesCampos/editarComponentes/editarinfo/CambiarInfo'
 import ejemplo from './components/ejemplo.vue'
 import '@mdi/font/css/materialdesignicons.css';
 
@@ -60,6 +64,30 @@ const router = new VueRouter({
       {
         path: 'editar-palabra/editar/:id',
         component: CambiarPalabra,
+        meta: { hideNav: true }
+      },
+
+      {
+        path: 'editar-oracion',
+        component: EditarOracion,
+        meta: { hideNav: true }
+      },
+
+      {
+        path: 'editar-oracion/editar/:id',
+        component: CambiarOracion,
+        meta: { hideNav: true }
+      },
+
+      {
+        path: 'editar-info',
+        component: EditarInfo,
+        meta: { hideNav: true }
+      },
+
+      {
+        path: 'editar-info/editar/:id',
+        component: CambiarInfo,
         meta: { hideNav: true }
       },
 
