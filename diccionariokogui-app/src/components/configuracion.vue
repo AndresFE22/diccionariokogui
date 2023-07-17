@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     login() {
-  if (this.username === 'usuario' && this.password === 'contraseña') {
+  if (this.username === 'admin' && this.password === 'admin123') {
     this.$router.push('/Campos/ingresar-palabra');
   } else {
     this.showError = true;
