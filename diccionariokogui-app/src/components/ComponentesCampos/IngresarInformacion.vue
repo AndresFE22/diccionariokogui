@@ -6,8 +6,8 @@
           <v-text-field v-model="significado" :rules="[[v => !!v || 'Este campo es requerido']]" :error-messages="getErrorMessages(significado)"  label="Digite su significado" class="text"></v-text-field>
           <v-file-input v-model="imagen" :rules="[[v => !!v || 'Este campo es requerido']]" :error-messages="getErrorMessages(imagen)"  label="Agregue una imagen" accept="image/*"></v-file-input>
           <div class="buttons">
-            <v-btn color="green" dark @click="GuardarDatos" class="b1">Guardar informacion</v-btn>          
-          <v-btn color="primary" @click="EditarInfo" class="b2" >Editar informacoin</v-btn>
+            <v-btn color="green" dark @click="GuardarDatos" class="b1">Guardar</v-btn>          
+          <v-btn color="primary" @click="EditarInfo" class="b2" >Editar</v-btn>
           </div>
     </div>
   </div>

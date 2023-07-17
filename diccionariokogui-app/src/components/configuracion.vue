@@ -4,7 +4,7 @@
     <v-form @submit="login">
       <v-text-field v-model="username" label="Nombre de usuario"></v-text-field>
       <v-text-field v-model="password" label="Contraseña" type="password"></v-text-field>
-      <v-btn type="submit">Iniciar sesión</v-btn>
+      <v-btn dark type="submit">Iniciar sesión</v-btn>
     </v-form>
     <br>
     <div v-if="showError" class="error-message">
