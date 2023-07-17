@@ -4,7 +4,7 @@
       <div class="form-container">
         <v-text-field v-model="nuevaOracion" label="Digite su oracion" class="text"></v-text-field>
         <v-text-field v-model="nuevoSignificado" label="Digite su significado" class="text"></v-text-field>
-        <v-btn @click="editarOracion">Editar informacion</v-btn>
+        <v-btn @click="editarOracion">Editar información</v-btn>
         <br>
         <router-link to="/Campos/editar-oracion"><v-btn>Regresar</v-btn></router-link>
       </div>
