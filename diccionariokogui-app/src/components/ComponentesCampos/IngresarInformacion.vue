@@ -9,6 +9,9 @@
             <v-btn color="green" dark @click="GuardarDatos" class="b1">Guardar</v-btn>          
           <v-btn color="primary" @click="EditarInfo" class="b2" >Editar</v-btn>
           </div>
+          <br>
+<br>
+          <div v-if="mensaje" class="mensaje">{{ mensaje }}</div>      
     </div>
   </div>
   </template>
@@ -38,6 +41,15 @@
     margin-right: 3%;
   }
 
+  .mensaje {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+
+}
+  
+
   .buttons .b2 {
     margin-left: 3%;
   }
@@ -60,6 +72,8 @@
         informacion: '',
         significado: '',
         imagen: null,
+        mensaje: "",
+
       };
     },
     name: 'CampoI',
@@ -74,6 +88,11 @@
         axios.post('http://localhost:5000/api/guardarinfo', formData)
         .then(response => {
             console.log(response.data);
+            this.mensaje = response.data.message;
+            setTimeout(() => {
+                this.mensaje = "";
+            }, 3000
+            );
             this.informacion = '';
             this.significado = '';
             this.imagen = null;

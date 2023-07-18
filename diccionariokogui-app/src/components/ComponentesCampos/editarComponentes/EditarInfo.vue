@@ -7,6 +7,7 @@
             <h1>Tabla de Información</h1>
         </div>
       <div class="container">
+        <div v-if="mensaje" class="mensaje">{{ mensaje }}</div>
         <v-data-table :headers="headers" :items="informacion" item-key="id" class="tabla-palabras">
           <template slot="item" slot-scope="{ item }">
             <tr>
@@ -72,7 +73,9 @@
         modalOpen: false,
         modalOpentwo: false,
         selectedImage: '',
-        selectedSignificado: ''
+        selectedSignificado: '',
+        mensaje: "",
+
       };
     },
     mounted() {
@@ -97,6 +100,11 @@
           .delete(`http://localhost:5000/api/info/${id}`)
           .then((response) => {
             console.log(response.data);
+            this.mensaje = response.data.message;
+            setTimeout(() => {
+                this.mensaje = "";
+            }, 3000
+            );
             this.obtenerinformacion();
           })
           .catch((error) => {
@@ -134,6 +142,13 @@
   
   <style scoped>
 
+.mensaje {
+    background-color: rgb(255, 45, 45);
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+
+    }
   .title {
     display: flex;
     justify-content: center;

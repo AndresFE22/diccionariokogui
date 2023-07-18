@@ -205,7 +205,7 @@ def editar_palabra(id):
     db.commit()
     cursor.close()
     
-    return jsonify({'message': 'Palabra eliminada correctamente'})
+    return jsonify({'message': 'Palabra editada correctamente'})
 
 #mandar imagen de palabras
 @app.route('/api/palabras/<int:id>/image', methods=['GET'])
@@ -254,7 +254,7 @@ def eliminar_oracion(id):
     db.commit()
     cursor.close()
     
-    return jsonify({'message': 'Palabra eliminada correctamente'})
+    return jsonify({'message': 'oracion eliminada correctamente'})
 
 #editar oraciones
 @app.route('/api/oraciones/<int:id>', methods=['PUT'])
@@ -271,7 +271,7 @@ def editar_oracion(id):
     db.commit()
     cursor.close()
     
-    return jsonify({'message': 'Palabra editada correctamente'})
+    return jsonify({'message': 'oracion editada correctamente'})
 
 #mandar imagen de oraciones
 @app.route('/api/oraciones/<int:id>/image', methods=['GET'])
@@ -320,7 +320,7 @@ def eliminar_informacion(id):
     db.commit()
     cursor.close()
     
-    return jsonify({'message': 'informacion eliminada correctamente'})
+    return jsonify({'message': 'información eliminada correctamente'})
 
 #editar oraciones
 @app.route('/api/info/<int:id>', methods=['PUT'])
@@ -337,7 +337,7 @@ def editar_informacion(id):
     db.commit()
     cursor.close()
     
-    return jsonify({'message': 'info editada correctamente'})
+    return jsonify({'message': 'información editada correctamente'})
 
 #mandar imagen de oraciones
 @app.route('/api/info/<int:id>/image', methods=['GET'])

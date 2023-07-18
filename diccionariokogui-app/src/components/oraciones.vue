@@ -45,6 +45,10 @@
   padding: 20px;
 }
 
+.imagen {
+  width: 400px; 
+  height: auto; 
+}
 .word-list {
   list-style-type: none;
   padding: 0;

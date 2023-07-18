@@ -13,6 +13,11 @@
   margin-top: 4%;
 }
 
+.imagen {
+  width: 400px; 
+  height: auto; 
+}
+
 .map-container {
   display: flex;
   justify-content: center;

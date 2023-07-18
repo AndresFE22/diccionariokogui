@@ -7,12 +7,21 @@
         <v-btn @click="editarOracion">Editar información</v-btn>
         <br>
         <router-link to="/Campos/editar-oracion"><v-btn>Regresar</v-btn></router-link>
+        <br>
+          <br>
+          <div v-if="mensaje" class="mensaje">{{ mensaje }}</div>
       </div>
     </div>
   </template>
   
   <style scoped>
-  .campos {
+  .mensaje {
+    background-color: rgb(13, 126, 255);
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    }
+.campos {
     margin-top: 15px;
   }
   
@@ -42,7 +51,9 @@
     data() {
       return {
         nuevaOracion: '',
-        nuevoSignificado: ''
+        nuevoSignificado: '',
+        mensaje: ""
+
       };
     },
     
@@ -58,6 +69,11 @@
         axios.put(`http://localhost:5000/api/oraciones/${id}`, datos)
           .then(response => {
             console.log(response.data);
+            this.mensaje = response.data.message;
+          setTimeout(() => {
+            this.mensaje = "";
+          }, 3000
+         )
             this.nuevaOracion = '';
             this.nuevoSignificado = '';
           })

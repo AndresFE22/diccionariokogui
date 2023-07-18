@@ -4,9 +4,12 @@
       <v-app-bar app v-if="!$route.meta.hideNav">
         <img src="./assets/UNICOR.png" alt="" class="imgunicor">
         <v-spacer></v-spacer>
-        <v-toolbar-title style="font-weight: bold;">DICCIONARIO KOGUI</v-toolbar-title>
+        <v-toolbar-title style="font-weight: bold;">DICCIONARIO LENGUA KOGUI</v-toolbar-title>
         <v-spacer></v-spacer>
         <img src="./assets/gicafs.jpeg" alt="" class="imggicafs">
+        <v-spacer></v-spacer>
+        <img src="./assets/lexicon.png" alt="" class="imggicafs">
+        <v-spacer></v-spacer>
         <v-btn icon to="/configuracion">
           <v-icon>mdi-account</v-icon>
         </v-btn>

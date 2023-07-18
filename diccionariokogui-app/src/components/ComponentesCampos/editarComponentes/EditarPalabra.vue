@@ -7,6 +7,7 @@
             <h1>Tabla de Palabras</h1>
         </div>
       <div class="container">
+        <div v-if="mensaje" class="mensaje">{{ mensaje }}</div>
         <v-data-table :headers="headers" :items="palabras" item-key="id" class="tabla-palabras">
           <template slot="item" slot-scope="{ item }">
             <tr>
@@ -72,7 +73,8 @@
         modalOpen: false,
         modalOpentwo: false,
         selectedImage: '',
-        selectedSignificado: ''
+        selectedSignificado: '',
+        mensaje: "",
       };
     },
     mounted() {
@@ -90,16 +92,18 @@
           });
       },
       editarPalabra(id) {
-        // Redirige a la vista de edición de palabras con el ID de la palabra
         this.$router.push(`editar-palabra/editar/${id}`);
       },
       eliminarPalabra(id) {
-        // Realiza una solicitud al servidor para eliminar la palabra por su ID
         axios
           .delete(`http://localhost:5000/api/palabras/${id}`)
           .then((response) => {
             console.log(response.data);
-            // Actualiza la lista de palabras después de eliminar
+            this.mensaje = response.data.message;
+            setTimeout(() => {
+                this.mensaje = "";
+            }, 3000
+            );
             this.obtenerPalabras();
           })
           .catch((error) => {
@@ -136,6 +140,14 @@
   </script>
   
   <style scoped>
+
+.mensaje {
+    background-color: rgb(255, 45, 45);
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+
+    }
 
   .title {
     display: flex;

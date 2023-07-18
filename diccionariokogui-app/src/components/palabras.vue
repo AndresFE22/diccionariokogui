@@ -131,6 +131,11 @@
 .fade-leave-to {
   opacity: 0;
 }
+
+.imagen {
+  width: 400px; 
+  height: auto; 
+}
 </style>
 
 <script>

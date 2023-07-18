@@ -9,8 +9,9 @@
             <v-btn color="green" dark @click="GuardarDatos" class="b1">Guardar</v-btn>          
           <v-btn color="primary" @click="EditarPalabras" class="b2" >Editar</v-btn>
           </div>
-          
-          
+          <br>
+<br>
+          <div v-if="mensaje" class="mensaje">{{ mensaje }}</div>      
         </div>
     </div>
   </template>
@@ -43,6 +44,14 @@
   .buttons .b2 {
     margin-left: 3%;
   }
+
+  .mensaje {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+
+}
   
   
   @media (max-width: 600px) {
@@ -62,6 +71,8 @@
         palabra: '',
         significado: '',
         imagen: null,
+        mensaje: "",
+
       };
     },
     name: 'CampoL',
@@ -76,6 +87,11 @@
         axios.post('http://localhost:5000/api/guardarpalabras', formData)
         .then(response => {
             console.log(response.data);
+            this.mensaje = response.data.message;
+            setTimeout(() => {
+                this.mensaje = "";
+            }, 3000
+            );
             this.palabra = '';
             this.significado = '';
             this.imagen = null;

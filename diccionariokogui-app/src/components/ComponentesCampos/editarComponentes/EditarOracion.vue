@@ -7,6 +7,7 @@
             <h1>Tabla de oraciones</h1>
         </div>
       <div class="container">
+        <div v-if="mensaje" class="mensaje">{{ mensaje }}</div>
         <v-data-table :headers="headers" :items="oraciones" item-key="id" class="tabla-palabras">
           <template slot="item" slot-scope="{ item }">
             <tr>
@@ -72,7 +73,8 @@
         modalOpen: false,
         modalOpentwo: false,
         selectedImage: '',
-        selectedSignificado: ''
+        selectedSignificado: '',
+        mensaje: "",
       };
     },
     mounted() {
@@ -90,16 +92,18 @@
           });
       },
       editarOracion(id) {
-        // Redirige a la vista de edición de palabras con el ID de la palabra
         this.$router.push(`editar-oracion/editar/${id}`);
       },
       eliminarOracion(id) {
-        // Realiza una solicitud al servidor para eliminar la palabra por su ID
         axios
           .delete(`http://localhost:5000/api/oraciones/${id}`)
           .then((response) => {
             console.log(response.data);
-            // Actualiza la lista de palabras después de eliminar
+            this.mensaje = response.data.message;
+            setTimeout(() => {
+                this.mensaje = "";
+            }, 3000
+            );
             this.obteneroraciones();
           })
           .catch((error) => {
@@ -142,10 +146,17 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    margin-top: 20px;
+    margin-top: 20px; }
 
 
-  }
+    .mensaje {
+    background-color: rgb(255, 45, 45);
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+
+    }
+  
   .tabla-palabras {
     margin-top: 15px;
     width: 100%;
