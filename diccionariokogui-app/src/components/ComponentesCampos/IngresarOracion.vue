@@ -51,7 +51,6 @@
   color: white;
   padding: 10px;
   border-radius: 20px;
-
 }
   
   
@@ -84,7 +83,7 @@
         formData.append('significado', this.significado);
         formData.append('imagen', this.imagen);
         
-        axios.post('http://localhost:5000/api/guardaroracion', formData)
+        axios.post('https://cuentaapi.pythonanywhere.com/apik/guardaroracion', formData)
         .then(response => {
             console.log(response.data);
             this.mensaje = response.data.message;

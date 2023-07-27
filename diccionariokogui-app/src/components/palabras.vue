@@ -133,7 +133,7 @@
 }
 
 .imagen {
-  width: 400px; 
+  width: 250px; 
   height: auto; 
 }
 </style>
@@ -156,7 +156,7 @@ export default {
   },
   methods: {
     obtenerPalabras() {
-      axios.get('http://localhost:5000/api/palabras')
+      axios.get('https://cuentaapi.pythonanywhere.com/apik/palabras')
         .then(response => {
           this.palabras = response.data;
           this.palabrasOriginal = [...response.data];

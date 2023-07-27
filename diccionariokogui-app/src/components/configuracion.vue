@@ -8,15 +8,12 @@
     </v-form>
     <br>
     <div v-if="showError" class="error-message">
-    Usuario o contraseña incorrectos
-  </div>
+      Usuario o contraseña incorrectos
+    </div>
   </div>
 </template>
 
 <style>
-
-
-
 .container {
   margin-top: 4%;
   overflow: hidden;
@@ -35,8 +32,6 @@
     margin-top: 12%;
   }
 }
-
-
 </style>
 
 <script>
@@ -52,16 +47,16 @@ export default {
   },
   methods: {
     login() {
-  if (this.username === 'admin' && this.password === 'admin123') {
-    this.$router.push('/Campos/ingresar-palabra');
-  } else {
-    this.showError = true;
-    setTimeout(() => {
-      this.showError = true;
-    }, 2000);
-  }
-},
-},
+      if (this.username === 'admin' && this.password === 'admin123') {
+        this.$router.push('/Campos/ingresar-palabra');
+      } else {
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = true;
+        }, 2000);
+      }
+    },
+  },
   name: 'ConfigLogin'
 };
 </script>

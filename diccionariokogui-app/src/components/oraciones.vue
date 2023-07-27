@@ -46,7 +46,7 @@
 }
 
 .imagen {
-  width: 400px; 
+  width: 250px; 
   height: auto; 
 }
 .word-list {
@@ -152,7 +152,7 @@ export default {
   },
   methods: {
     obtenerOraciones() {
-      axios.get('http://localhost:5000/api/oraciones')
+      axios.get('https://cuentaapi.pythonanywhere.com/apik/oraciones')
         .then(response => {
           this.oraciones = response.data;
           this.oracionesOriginal = [...response.data];

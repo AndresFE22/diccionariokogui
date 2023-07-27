@@ -111,6 +111,11 @@
 .significado-text {
   font-style: italic;
 }
+
+.imagen {
+  width: 250px; 
+  height: auto;
+}
 </style>
 
 <script>
@@ -131,7 +136,7 @@ export default {
   },
   methods: {
     obtenerInformacion() {
-      axios.get('http://localhost:5000/api/info')
+      axios.get('https://cuentaapi.pythonanywhere.com/apik/info')
         .then(response => {
           this.informacion = response.data;
           this.InformacionOriginal = [...response.data];

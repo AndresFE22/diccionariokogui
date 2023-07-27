@@ -85,7 +85,7 @@
         formData.append('significado', this.significado);
         formData.append('imagen', this.imagen);
         
-        axios.post('http://localhost:5000/api/guardarinfo', formData)
+        axios.post('https://cuentaapi.pythonanywhere.com/apik/guardarinfo', formData)
         .then(response => {
             console.log(response.data);
             this.mensaje = response.data.message;

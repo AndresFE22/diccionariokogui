@@ -38,7 +38,7 @@
       </div>
       <v-dialog v-model="modalOpen" max-width="500px">
         <v-card>
-          <img :src="selectedImage" width="500px" />
+          <img :src="selectedImage" width="300px" />
         </v-card>
       </v-dialog>
       <v-dialog v-model="modalOpentwo" max-width="500px">
@@ -83,7 +83,7 @@
     methods: {
       obtenerPalabras() {
         axios
-          .get('http://localhost:5000/api/showtable')
+          .get('https://cuentaapi.pythonanywhere.com/apik/showtable')
           .then((response) => {
             this.palabras = response.data;
           })
@@ -96,7 +96,7 @@
       },
       eliminarPalabra(id) {
         axios
-          .delete(`http://localhost:5000/api/palabras/${id}`)
+          .delete(`https://cuentaapi.pythonanywhere.com/apik/palabras/${id}`)
           .then((response) => {
             console.log(response.data);
             this.mensaje = response.data.message;
@@ -112,7 +112,7 @@
       },
       openModal(id) {
         axios
-          .get(`http://localhost:5000/api/palabras/${id}/image`)
+          .get(`https://cuentaapi.pythonanywhere.com/apik/palabras/${id}/image`)
           .then((response) => {
             this.selectedImage = this.getImageUrl(
               response.data.imagen_base64,
