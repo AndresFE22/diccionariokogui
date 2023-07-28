@@ -31,7 +31,7 @@ Vue.use(Vuetify);
 const router = new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', beforeEnter: (to, from, next) => next('/palabras') },
+    { path: '/', component: palabras},
     { path: '/palabras', component: palabras },
     { path: '/oraciones', component: oraciones },
     { path: '/informacion', component: informacion },
